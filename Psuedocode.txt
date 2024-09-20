@@ -1,0 +1,39 @@
+
+
+
+#JS
+
+Initialize variable "playerChoice", "computerChoice", "p;layerPoints", "computerPoints"
+
+function winCondition() {
+    if playerPoints = 5: return "ComputerPoints"
+    
+}
+
+
+while True:
+    Assign player Choice to proper button
+    Select Comptuer Choice
+    Determine if player wins, ties, or loses
+    assign points to player if won, computer if lost, or none.
+    check if winCondition() returns a string
+        endgame, return winCondition, break;
+    else continue running
+    
+
+
+
+function getcomputerChoice(){
+    initialize var choice
+    set choice as random number between 0-2
+    returns choice
+}
+
+
+function determineWinner() {
+    player ties to n%3 number
+    player wins to (n+1)%3 number
+    player loses to (n+2)%3 number 
+}
+
+

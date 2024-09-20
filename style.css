@@ -1,0 +1,69 @@
+body {
+    padding:0;
+    margin:0;
+}
+
+* {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+}
+header {
+    background-color: grey;
+    margin:0;
+    font-size:60px;
+    text-align: center;
+    padding:30px;
+    flex:auto;
+
+}
+
+.play-section{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size:45px;
+    flex:1;
+    
+}
+
+#player-card, #computer-card{
+    margin:auto;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+.gameplay{
+    display:flex;
+    gap:100px;
+    align-items: center;
+    margin:40px;
+}
+
+
+.card {
+    width:150px;
+    height:150px;
+    font-size: 40px;
+    border-radius: 20px;
+    box-shadow:3px 3px 3px gray;
+    text-align: center;
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+
+
+
+.button-list{
+    margin:auto;
+    margin-bottom:40px;
+}
+
+footer {
+    text-align: center;
+    background-color: gray;
+    height:94px;
+}
