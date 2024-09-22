@@ -36,7 +36,7 @@ scissor.addEventListener('click',() => {
     displayOnCard(playerCard,2);
 });
 
-//Displays player/computer choice on card on screen.
+//Displays player/computer choice on card on gameplay area.
 function displayOnCard (html,num){
     switch (num){
         case 0:
@@ -51,9 +51,7 @@ function displayOnCard (html,num){
     }
 }
 
-
-
-//Computer choice returns 0,1,2 for its corresponding choice
+//returns 0,1,2 for its corresponding choice (rock,paper, or scissors)
 let getComputerChoice = () => {
     num = Math.floor(Math.random()* 3);
     displayOnCard(computerCard,num);
@@ -75,11 +73,6 @@ e.g: paper (1) will
 
 */
 
-/*
-This function has two functions: 
-1: Determining the winner of the current round
-2: Determining if either the player or computer has reached 5 points, i.e: won the entire game.
-*/
 function determineRoundWinner(playerChoice){
     let computerChoice = getComputerChoice()
     if (playerChoice == computerChoice) {
