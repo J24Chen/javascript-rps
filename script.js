@@ -24,15 +24,15 @@ let computerScore = 0;
 
 //Listens for player choice buttons. 0,1,2 correspond to rock,paper,scissor accordingly
 rock.addEventListener('click',() => {
-    determineWinner(0);
+    determineRoundWinner(0);
     displayOnCard(playerCard,0);
 });
 paper.addEventListener('click',() => {
-    determineWinner(1);
+    determineRoundWinner(1);
     displayOnCard(playerCard,1);
 });
 scissor.addEventListener('click',() => {
-    determineWinner(2);
+    determineRoundWinner(2);
     displayOnCard(playerCard,2);
 });
 
@@ -68,7 +68,6 @@ Because of the placement of Rock = 0, Paper =1, Scissor = 2, we have an algorith
     player ties to n%3 number
     player loses to (n+1)%3 number
     player wins to (n+2)%3 number 
-
 e.g: paper (1) will 
     tie to paper(1)
     loses to scissor(2)
@@ -76,8 +75,12 @@ e.g: paper (1) will
 
 */
 
-
-function determineWinner(playerChoice){
+/*
+This function has two functions: 
+1: Determining the winner of the current round
+2: Determining if either the player or computer has reached 5 points, i.e: won the entire game.
+*/
+function determineRoundWinner(playerChoice){
     let computerChoice = getComputerChoice()
     if (playerChoice == computerChoice) {
         information.innerHTML = "It's a Tie!";
@@ -91,26 +94,29 @@ function determineWinner(playerChoice){
         playerScore++;
         playerScoreDisplay.innerHTML = `Player Score: ${playerScore}`;
     }
-
-    if (computerScore == 5) {
-        information.innerHTML = "GAME OVER: Computer wins!";
-        //disable the rest of the buttons
-        for (i = 0; i < buttons.length; i++) {
-            buttons[i].disabled = true;
-            buttons[i].style.backgroundColor = "#DADAD9";
-        }
-    } else if (playerScore == 5) {
-        information.innerHTML = "GAME OVER: You win!";
-        //disables the rest of the buttons
-        for (i = 0; i < buttons.length; i++) {
-            buttons[i].disabled = true;
-            buttons[i].style.backgroundColor = "#DADAD9";
-        }
+    
+    if (getGameWinner){
+        information.innerHTML = `GAME OVER: ${getGameWinner} wins!`;
+        disableButtons();
     }
 
-
+function disableButtons(){
+    for (i = 0; i < buttons.length; i++) {
+        buttons[i].disabled = true;
+        buttons[i].style.backgroundColor = "#DADAD9";
+    }
 }
 
+
+function getGameWinner() {
+    if (computerScore == 5) {
+        return "Computer"
+    } else if (playerScore == 5) {
+        return "Player"
+        }
+    }
+    return null;
+}
 
 
 
