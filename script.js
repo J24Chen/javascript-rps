@@ -9,75 +9,98 @@ This will make determining the winner easier with a game winning algorithm:
     player loses to (n+1)%3 number
     player wins to (n+2)%3 number 
 */
-
+const buttons = document.getElementsByTagName('button');
+const rock = document.querySelector('.rock');
+const paper = document.querySelector('.paper');
+const scissor = document.querySelector('.scissor');
+const information = document.getElementById('information');
+const playerCard = document.getElementById('player-card');
+const computerCard = document.getElementById('computer-card');
+const playerScoreDisplay = document.getElementById('player-score');
+const computerScoreDisplay = document.getElementById('computer-score');
 let playerScore = 0;
 let computerScore = 0;
 
-function isValidPlayerChoice(playerChoice){
-    if(playerChoice == null){
-        return false;
-    }
-    playerChoice = playerChoice.toLowerCase();
-    if(playerChoice == 'rock' || playerChoice == 'r' || playerChoice == '0' ||
-       playerChoice == 'paper' || playerChoice == 'p' || playerChoice == '1' ||
-       playerChoice == 'scissor' || playerChoice == 's' || playerChoice == '2') {
-        return true;
-       } else {
-        return false;
-       }
-}
 
-function convertPlayerChoice(playerChoice){
-    playerChoice = playerChoice.toLowerCase();
-    if (playerChoice == 'rock' || playerChoice == 'r' || playerChoice == '0') {
-        return 0;
-    } else if (playerChoice == 'paper' || playerChoice == 'p' || playerChoice == '1'){
-        return 1
-    }else if  (playerChoice == 'scissor' || playerChoice == 's' || playerChoice == '2') {
-        return 2;
+//Listens for player choice buttons. 0,1,2 correspond to rock,paper,scissor accordingly
+rock.addEventListener('click',() => {
+    determineRoundWinner(0);
+    displayOnCard(playerCard,0);
+});
+paper.addEventListener('click',() => {
+    determineRoundWinner(1);
+    displayOnCard(playerCard,1);
+});
+scissor.addEventListener('click',() => {
+    determineRoundWinner(2);
+    displayOnCard(playerCard,2);
+});
+
+//Displays player/computer choice on card on gameplay area.
+function displayOnCard (html,num){
+    switch (num){
+        case 0:
+            html.innerHTML = "✊";
+            break;
+        case 1:
+            html.innerHTML = "✋";
+            break;
+        case 2:
+            html.innerHTML = "✌ ";
+            break;
     }
 }
-
 
 //returns 0,1,2 for its corresponding choice (rock,paper, or scissors)
 let getComputerChoice = () => {
     num = Math.floor(Math.random()* 3);
+    displayOnCard(computerCard,num);
+    console.log(num);
     return num;
+    
 };
 
-function numberToGameChoice(num) {
-    switch (num) {
-        case 0:
-            return "rock";
-        case 1:
-            return "paper";
-        case 2:
-            return "scissor";
-    }
-}
+/* Using
+Because of the placement of Rock = 0, Paper =1, Scissor = 2, we have an algorithm to determine the winner
 
+    player ties to n%3 number
+    player loses to (n+1)%3 number
+    player wins to (n+2)%3 number 
+e.g: paper (1) will 
+    tie to paper(1)
+    loses to scissor(2)
+    wins to rock(0)
+
+*/
 
 function determineRoundWinner(playerChoice){
     let computerChoice = getComputerChoice()
-    let text = ""
-
-    let computerChoiceName = numberToGameChoice(computerChoice);
-    let playerChoiceName = numberToGameChoice(playerChoice);
-
-    console.log(`playerChoice = ${playerChoice}, ${playerChoiceName}, Computer Choice = ${computerChoice}, ${computerChoiceName}`);
     if (playerChoice == computerChoice) {
-        text += `${playerChoiceName} ties to ${computerChoiceName}! `
+        information.innerHTML = "It's a Tie!";
     } else if ((playerChoice+1)%3 == computerChoice){
-        text += `${playerChoiceName} loses to ${computerChoiceName}! `
+        information.innerHTML = "You Lose!";
         computerScore++;
-
+        computerScoreDisplay.innerHTML = `Computer Score: ${computerScore}`;
+        
     } else {
-        text += `${playerChoiceName} wins against ${computerChoiceName}! `
+        information.innerHTML = "You win!";
         playerScore++;
+        playerScoreDisplay.innerHTML = `Player Score: ${playerScore}`;
     }
-    text += `Player: ${playerScore} | Computer: ${computerScore}`
-    alert(text)
+
+    
+    if (getGameWinner()){
+        information.innerHTML = `GAME OVER: ${getGameWinner()} wins!`;
+        disableButtons();
+    }
 }
+
+    function disableButtons(){
+        for (i = 0; i < buttons.length; i++) {
+            buttons[i].disabled = true;
+            buttons[i].style.backgroundColor = "#DADAD9";
+        }
+    }
 
 
 function getGameWinner() {
@@ -85,20 +108,6 @@ function getGameWinner() {
         return "Computer"
     } else if (playerScore == 5) {
         return "Player"
-        }
-        return null;
-}
-
-while(!(getGameWinner())){
-    let playerChoice = "";
-    do {
-        playerChoice = prompt("Please choose 'rock', 'paper' or 'scissor");
-    } while ( !(isValidPlayerChoice(playerChoice)) );
-
-    playerChoice = convertPlayerChoice(playerChoice);
-    determineRoundWinner(playerChoice);
-
-}
-
-alert(`GAME OVER: ${getGameWinner()} wins!: total score: Player: ${playerScore} | Computer: ${computerScore}`)
-
+    }
+    return false;
+    }
